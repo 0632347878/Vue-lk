@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+<div class="wrapper">
+    <div class="sample">
+        <h1>Hello dude</h1>
+        <form>
+            <div class="form-groupe">
+                <label>Email</label>
+                <input type="text" class="form-control" v-model="email">
+            </div>
+            <div class="form-groupe">
+                <label>Name</label>
+                <input type="text" class="form-control" v-model="name">
+            </div>
+            <div class="form-groupe">
+                <label>First</label>
+                <input type="text" class="form-control" v-model="firstName">
+            </div>
+            <div class="form-groupe">
+                <label>Last</label>
+                <input type="text" class="form-control" v-model="lastName">
+            </div>
+            <div class="form-groupe">
+                <label>Phone</label>
+                <input type="text" class="form-control" v-model="phone">
+            </div>
+            <div class="form-groupe">
+                <label>Sex</label>
+                <input type="text" class="form-control" v-model="sex">
+            </div>
+            <div class="form-groupe">
+                <label>Guests</label>
+                <input type="text"
+                       class="btn btn-primary"
+                       value="+"
+                       @click="addGuest"
+                >
+            </div>
+            <div class="form-groupe" v-for="(guest, index) in guests">
+                <label>Guest {{ index + 1 }} </label>
+                <input type="text" class="form-control" v-model="guests[index]">
+            </div>
+        </form>
+        <table class="table table-bordered">
+            <tr>
+                <td>Email</td>
+                <td>{{ email }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{name}}</td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td>{{phone}}</td>
+            </tr>
+            <tr>
+                <td>Sex</td>
+                <td>{{sex}}</td>
+            </tr>
+            <tr>
+                <td>Full Name</td>
+                <td>{{fullName}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<style>
+    .wrapper {
+        max-width: 300px;
+        padding: 10px 20px;
+    }
+    .form-groupe {
+        margin-bottom: 10px; }
+    .form-groupe:first-child {
+        margin-top: 30px;
+    }
+    .btn.btn-primary {
+        max-width: 50px;
+        margin-left: 20px;
+    }
+</style>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/main.js"></script>
+<script>
+    new Vue({
+        el: '.sample',
+        data: {
+            firstName: '',
+            lastName: '',
+            name: '',
+            email: '',
+            phone: '',
+            sex: '',
+            guests: []
+        },
+        computed: {
+            fullName(){
+                return this.firstName+ ' ' + this.lastName;
+            }
+        },
+        methods: {
+            addGuest() {
+                 this.guests.push('');
+            }
+        }
+    })
+</script>
+</body>
+</html>
