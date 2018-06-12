@@ -72,6 +72,9 @@
                 <td>{{fullName}}</td>
             </tr>
         </table>
+        <app-progress v-bind:val="currentNumbers"
+                      v-bind:max="maxNumbers">
+        </app-progress>
     </div>
 
 </div>
@@ -90,13 +93,49 @@
         max-width: 50px;
         margin-left: 20px;
     }
+    .table td:first-child {
+        width: 75%;
+        min-width: 90px;
+    }
 </style>
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/main.js"></script>
 <script>
-    new Vue({
+
+    Vue.component('app-progress', {
+     props: {
+      max: Number,
+      val: Number
+     },
+     computed: {
+      width(){
+       let w = this.val / this.max * 100;
+
+       return {
+        width: w + '%'
+       }
+      },
+      addCount() {
+        return inst.data.currentNumbers += 1;
+      }
+     },
+     template: `
+     <div>
+     <div class="progress">
+      <div class="progress-bar" v-bind:style="width"></div>
+     </div>
+            <input type="text"
+                   class="btn btn-primary"
+                   value="+"
+                   v-on:click="addCount"
+            >
+     </div>
+     `
+    });
+
+    var inst = new Vue({
         el: '.sample',
         data: {
             firstName: '',
@@ -105,12 +144,16 @@
             email: '',
             phone: '',
             sex: '',
-            guests: []
+            guests: [],
+            maxNumbers: 10,
+            currentNumbers: 5
+
         },
         computed: {
             fullName(){
                 return this.firstName+ ' ' + this.lastName;
             }
+
         },
         methods: {
             addGuest() {
