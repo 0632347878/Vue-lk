@@ -107,7 +107,11 @@
     Vue.component('app-progress', {
      props: {
       max: Number,
-      val: Number
+      val: Number,
+
+     },
+     data() {
+
      },
      computed: {
       width(){
@@ -118,7 +122,9 @@
        }
       },
       addCount() {
-        return inst.data.currentNumbers += 1;
+        //return inst.data.currentNumbers += 1;
+       this.$emit('', this.currentNumbers);
+
       }
      },
      template: `
@@ -154,6 +160,11 @@
                 return this.firstName+ ' ' + this.lastName;
             }
 
+        },
+        mounted() {
+            this.$on('', (data) => {
+
+            })
         },
         methods: {
             addGuest() {
