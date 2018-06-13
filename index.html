@@ -12,69 +12,22 @@
 <div class="wrapper">
     <div class="sample">
         <h1>Hello dude</h1>
-        <form>
-            <div class="form-groupe">
-                <label>Email</label>
-                <input type="text" class="form-control" v-model="email">
-            </div>
-            <div class="form-groupe">
-                <label>Name</label>
-                <input type="text" class="form-control" v-model="name">
-            </div>
-            <div class="form-groupe">
-                <label>First</label>
-                <input type="text" class="form-control" v-model="firstName">
-            </div>
-            <div class="form-groupe">
-                <label>Last</label>
-                <input type="text" class="form-control" v-model="lastName">
-            </div>
-            <div class="form-groupe">
-                <label>Phone</label>
-                <input type="text" class="form-control" v-model="phone">
-            </div>
-            <div class="form-groupe">
-                <label>Sex</label>
-                <input type="text" class="form-control" v-model="sex">
-            </div>
-            <div class="form-groupe">
-                <label>Guests</label>
-                <input type="text"
-                       class="btn btn-primary"
-                       value="+"
-                       @click="addGuest"
-                >
-            </div>
-            <div class="form-groupe" v-for="(guest, index) in guests">
-                <label>Guest {{ index + 1 }} </label>
-                <input type="text" class="form-control" v-model="guests[index]">
-            </div>
-        </form>
-        <table class="table table-bordered">
-            <tr>
-                <td>Email</td>
-                <td>{{ email }}</td>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>{{name}}</td>
-            </tr>
-            <tr>
-                <td>Phone</td>
-                <td>{{phone}}</td>
-            </tr>
-            <tr>
-                <td>Sex</td>
-                <td>{{sex}}</td>
-            </tr>
-            <tr>
-                <td>Full Name</td>
-                <td>{{fullName}}</td>
-            </tr>
-        </table>
-        <app-progress v-bind:val="currentNumbers"
-                      v-bind:max="maxNumbers">
-        </app-progress>
+        <div>
+             <app-progress
+                v-for="post in posts"
+                :style="{ fontSize: postFontSize + 'em' }"
+                :title="post.title"
+                v-bind:key="post.id"
+                :id="post.id"
+                v-on:enlarge-text="postFontSize += 0.1"
+            ></app-progress>
+
+            <app-progress
+                v-for="post in posts"
+                :title="post.title"
+            >
+            </app-progress>
+        </div>
     </div>
 
 </div>
@@ -105,73 +58,26 @@
 <script>
 
     Vue.component('app-progress', {
-     props: {
-      max: Number,
-      val: Number,
-
-     },
-     data() {
-
-     },
-     computed: {
-      width(){
-       let w = this.val / this.max * 100;
-
-       return {
-        width: w + '%'
-       }
-      },
-      addCount() {
-        //return inst.data.currentNumbers += 1;
-       this.$emit('', this.currentNumbers);
-
-      }
-     },
-     template: `
-     <div>
-     <div class="progress">
-      <div class="progress-bar" v-bind:style="width"></div>
-     </div>
-            <input type="text"
-                   class="btn btn-primary"
-                   value="+"
-                   v-on:click="addCount"
-            >
-     </div>
-     `
+        props: ['title', "id"],
+        template: `<div><span>{{ id }}</span> <h3>{{ title }}</h3>
+            <button v-on:click="$emit('enlarge-text')">
+                Увеличить размер текста
+            </button >
+            </div>`
     });
 
-    var inst = new Vue({
+    new Vue({
         el: '.sample',
         data: {
-            firstName: '',
-            lastName: '',
-            name: '',
-            email: '',
-            phone: '',
-            sex: '',
-            guests: [],
-            maxNumbers: 10,
-            currentNumbers: 5
-
-        },
-        computed: {
-            fullName(){
-                return this.firstName+ ' ' + this.lastName;
-            }
-
-        },
-        mounted() {
-            this.$on('', (data) => {
-
-            })
-        },
-        methods: {
-            addGuest() {
-                 this.guests.push('');
-            }
+            posts: [
+                { id: 1, title: 'My journey with Vue' },
+                { id: 2, title: 'Blogging with Vue' },
+                { id: 3, title: 'Why Vue is so fun' }
+            ],
+            postFontSize: 1
         }
     })
+
 </script>
 </body>
 </html>
