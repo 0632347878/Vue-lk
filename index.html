@@ -73,8 +73,13 @@
             </tr>
         </table>
         <app-progress v-bind:val="currentNumbers"
-                      v-bind:max="maxNumbers">
+                      v-bind:max="maxNumbers"
+											v-on:welcometwo="addGuest">
         </app-progress>
+
+			<div id="emit-example-simple">
+				<welcome-button v-on:welcome="sayHi"></welcome-button>
+			</div>
     </div>
 
 </div>
@@ -104,14 +109,23 @@
 <script src="js/main.js"></script>
 <script>
 
+
+     Vue.component('welcome-button', {
+      template: `
+        <button v-on:click="$emit('welcome')">
+          Нажмите для приветствия
+        </button>
+      `
+     });
+
     Vue.component('app-progress', {
      props: {
       max: Number,
       val: Number,
 
      },
-     data() {
-
+     data:  () => {
+			return {}
      },
      computed: {
       width(){
@@ -135,7 +149,7 @@
             <input type="text"
                    class="btn btn-primary"
                    value="+"
-                   v-on:click="addCount"
+                   v-on:click="$emit('welcometwo')"
             >
      </div>
      `
@@ -169,7 +183,11 @@
         methods: {
             addGuest() {
                  this.guests.push('');
-            }
+            },
+					  sayHi: function () {
+						alert('Привет!')
+					 }
+
         }
     })
 </script>
