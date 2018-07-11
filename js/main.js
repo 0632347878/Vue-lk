@@ -1,61 +1,42 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    var itemsArray = [],
-        items  = document.querySelectorAll(".intellect-choose__item"),
-        item = document.querySelector(".intellect-choose__item");
-    var i;
+    var parent = document.querySelector(".intellect-choose"),
+        numberOfelmnt  = document.querySelectorAll(".intellect-choose__item").length,
+        elmnt = document.querySelectorAll(".intellect-choose__item"),
+        activeClass = 'active';
 
-        // for(i=0;items.length < 3; i++ ) {
-        //     console.log(items[i]);
-        // }
+        if(parent !== null) {
+            var repeat = (numberOfIterations, timeBetweenItereation, stuffToRepeat) => {
+                var iterationCounter = 0;
+                var repeater = () => {
+                    setTimeout( () => {
+                        stuffToRepeat(elmnt[iterationCounter], activeClass);
+                        iterationCounter++;
+                        if (numberOfIterations === iterationCounter) {
+                            iterationCounter = 0;
+                        };
+                        if (iterationCounter >= numberOfIterations) {
+                            return;
+                        };
+                        repeater();
+                    }, 1000 * timeBetweenItereation);
+                };
+                repeater();
+            };
 
+            var addClassToElmnt = (elmnt, className) => {
+                var elmntWithClassToRemove = document.getElementsByClassName(className);
 
-    // function start() {
-    //     items.forEach(function (item, i, items) {
-    //
-    //         item.classList.add('active');
-    //
-    //             if ( i !== 0 ) {
-    //                 item.previousSibling.className = "";
-    //             }
-    //
-    //             else if( i === 3 ) {
-    //                 i = 0;
-    //                 item.previousSibling.className = "";
-    //             }
-    //
-    //         console.log(item);
-    //     });
-    // }
+                [...elmntWithClassToRemove].forEach((curentElmnt)=>{
+                    curentElmnt.classList.remove(className);
+                });
 
-    function start() {
+                elmnt.classList.add(className);
+            };
 
-        for ( var i = 0; i < items.length; i++ ) {
-
-            if ( i === 0 ) {
-                items[i].classList.add('active');
-
-            }
-
-            else if ( i !== 0 ) {
-                items[i-1].classList.remove('active');
-                items[i].classList.add('active');
-            }
-
-            else if( i === 3 ) {
-                i = 0;
-                items[i-1].classList.remove('active');
-                items[i].classList.add('active');
-            }
-
-            console.log(items[i]);
-
+            repeat(numberOfelmnt, 2, addClassToElmnt);
         }
-    }
-
-    // start();
-    setInterval( start, 1000);
 
 });
 
