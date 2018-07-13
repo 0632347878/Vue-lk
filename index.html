@@ -15,27 +15,40 @@
         <form>
             <div class="form-groupe">
                 <label>Email</label>
-                <input type="text" class="form-control" v-model="email">
+                <input type="text"
+                class="form-control"
+                v-model="email"
+                @keyup.enter="nextPlace">
             </div>
             <div class="form-groupe">
                 <label>Name</label>
-                <input type="text" class="form-control" v-model="name">
+                <input type="text" class="form-control"
+                v-model="name"
+                @keyup.enter="nextPlace">
             </div>
             <div class="form-groupe">
                 <label>First</label>
-                <input type="text" class="form-control" v-model="firstName">
+                <input type="text" class="form-control"
+                v-model="firstName"
+                @keyup.enter="nextPlace">
             </div>
             <div class="form-groupe">
                 <label>Last</label>
-                <input type="text" class="form-control" v-model="lastName">
+                <input type="text" class="form-control"
+                v-model="lastName"
+                @keyup.enter="nextPlace">
             </div>
             <div class="form-groupe">
                 <label>Phone</label>
-                <input type="text" class="form-control" v-model="phone">
+                <input type="text" class="form-control"
+                v-model="phone"
+                @keyup.enter="nextPlace">
             </div>
             <div class="form-groupe">
                 <label>Sex</label>
-                <input type="text" class="form-control" v-model="sex">
+                <input type="text" class="form-control"
+                v-model="sex"
+                @keyup.enter="clicked()">
             </div>
             <div class="form-groupe">
                 <label>Guests</label>
@@ -50,6 +63,10 @@
                 <input type="text" class="form-control" v-model="guests[index]">
             </div>
         </form>
+        <p  :class="classObj"
+            class="def" @click.stop="switchClass">
+            custom paragraph
+        </p>
         <table class="table table-bordered">
             <tr>
                 <td>Email</td>
@@ -73,7 +90,6 @@
             </tr>
         </table>
     </div>
-
 </div>
 
 <style>
@@ -99,6 +115,10 @@
     new Vue({
         el: '.sample',
         data: {
+            classObj: {
+                'active': true,
+                'text-danger' : false
+            },
             firstName: '',
             lastName: '',
             name: '',
@@ -114,7 +134,17 @@
         },
         methods: {
             addGuest() {
-                 this.guests.push('');
+                this.guests.push('');
+            },
+            switchClass() {
+                this.classObj.active = false ;
+                this.classObj.textDanger = true
+            },
+            clicked() {
+              alert("enter");
+            },
+            nextPlace(event) {
+                event.target.parentNode.nextElementSibling.querySelector('input').focus();
             }
         }
     })
